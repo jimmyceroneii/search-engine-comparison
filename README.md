@@ -8,3 +8,5 @@ The tool utilizes Cypress, an automated testing framework. Google and others wil
 In the end, Cypress is not built well for this. I'm utilizing it here because it is fast and easy and I'm running what we at Jimmy & Neil Have Problems an alpha. The goal is to get a working prototype done in 1 hour. 
 
 There are a few limitations to this approach. First, it's slow as hell and risks getting your IP banned by search engines for using a script. Second, it is not truly aggregating search results. Ideally, you could search in one place and grab aggregated results in one place as well. This would make comparison easier and improve our ability to avoid SEO clickbait and improve the quality of results. 
+
+For more information on the problem we are addressing with this project, check out the problem here [Some sites serve consistently bad content but rank high via SEO](https://jimmyandneilhaveproblems.com/Gordium/Problems/Some+sites+serve+consistently+bad+content+but+rank+high+via+SEO).
