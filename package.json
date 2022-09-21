@@ -2,5 +2,8 @@
   "name": "search-engine-randomization",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "cy:run": "cypress run --env"
+  }
 }
