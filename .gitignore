@@ -1,3 +1,4 @@
 node_modules
 cypress/screenshots
 cypress/e2e/results.json
+cypress/e2e/results/*

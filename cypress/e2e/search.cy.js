@@ -1,17 +1,20 @@
 describe('visit search engines and grab search results', () => {
-  it('navigates to google and enters search query, logging out the url of the first result', () => {
+  it.only('navigates to google and enters search query, logging out the url of the first result', () => {
     const search = Cypress.env('search')
-
-    cy.writeFile('./cypress/e2e/results.json', { search });
 
     cy.visit('https://google.com');
 
     cy.get('input[name="q"]').type(`${search}{enter}`, { delay: 500 });
 
+    const google = [];
+
     cy.get('#search a')
-      .first()
-      .invoke('attr', 'href')
-      .then((href) => cy.writeFile('./cypress/e2e/results.json', { source: 'google', href }, { flag: 'a+' }));
+      .each(($el, index) => {
+        google.push({ [`google${index}`]: $el[0].href })
+      })
+
+    cy.writeFile('./cypress/e2e/results/google.json', JSON.stringify(google))
+
   })
 
   it('navigates to duckduckgo and enters search query, logging out the url of the first result', () => {
@@ -22,10 +25,13 @@ describe('visit search engines and grab search results', () => {
     cy.get('input[name="q"]')
       .type(`${search}{enter}`, { delay: 500 })
 
-    cy.get('[data-testid= "result-title-a"]')
-      .first()
-      .invoke('attr', 'href')
-      .then((href) => cy.writeFile('./cypress/e2e/results.json', { source: 'duckduckgo', href }, { flag: 'a+' }))
+    const duckduckgo = [];
+
+    cy.get('[data-testid= "result-title-a"]').each(($el, index) => {
+      duckduckgo.push({ [`duckduckgo${index}`]: $el[0].href })
+    })
+
+    cy.writeFile('./cypress/e2e/results/duckduckgo.json', JSON.stringify(duckduckgo))
   })
 
   it('navigates to neeva and enters search query, logging out the url of the first result', () => {
@@ -36,11 +42,13 @@ describe('visit search engines and grab search results', () => {
     cy.get('input[name="q"]')
       .type(`${search}{enter}`, { delay: 500 })
 
-    cy.get('[data-gtid="result-item"]')
-      .first()
-      .get('.lib-doc-title__link-1b9rC')
-      .invoke('attr', 'href')
-      .then((href) => cy.writeFile('./cypress/e2e/results.json', { source: 'neeva', href }, { flag: 'a+' }))
+    const neeva = [];
+
+    cy.get('[data-testid= "result-title-a"]').each(($el, index) => {
+      neeva.push({ [`neeva${index}`]: $el[0].href })
+    })
+
+    cy.writeFile('./cypress/e2e/results/neeva.json', JSON.stringify(neeva))
   })
 
   it('navigates to bing and enters search query, logging out the url of the first result', () => {
@@ -55,9 +63,11 @@ describe('visit search engines and grab search results', () => {
     cy.get('input[name="q"]')
       .type(`${search}{enter}`, { delay: 500 })
 
-    cy.get('#b_results > li.b_algo > h2.b_topTitle > a')
-      .invoke('attr', 'href')
-      .then((href) => cy.writeFile('./cypress/e2e/results.json', { source: 'bing', href }, { flag: 'a+' }))
+    const bing = [];
 
+    cy.get('#b_results > li.b_algo > h2.b_topTitle > a')
+      .each(($el, index) => { bing.push({ [`bing${index}`]: $el[0].href }) })
+
+    cy.writeFile('./cypress/e2e/results/bing.json', JSON.stringify(bing))
   })
 })
