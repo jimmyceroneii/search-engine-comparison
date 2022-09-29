@@ -1,5 +1,5 @@
 describe('visit search engines and grab search results', () => {
-  it.only('navigates to google and enters search query, logging out the url of the first result', () => {
+  it('navigates to google and enters search query, logging out the url of the first result', () => {
     const search = Cypress.env('search')
 
     cy.visit('https://google.com');
