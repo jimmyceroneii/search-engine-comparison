@@ -4,7 +4,7 @@ describe('visit search engines and grab search results', () => {
 
     cy.visit('https://google.com');
 
-    cy.get('input[name="q"]').type(`${search}{enter}`, { delay: 500 });
+    cy.get('input[name="q"]').type(`${search}{enter}`, { delay: 25 });
 
     cy.writeFile('./cypress/e2e/results/google.json', '[\n');
 
@@ -63,7 +63,7 @@ describe('visit search engines and grab search results', () => {
     cy.writeFile('./cypress/e2e/results/neeva.json', '\n]', { flag: 'a+' });
   });
 
-  it.only('navigates to bing and enters search query, logging out the url of the first result', () => {
+  it('navigates to bing and enters search query, logging out the url of the first result', () => {
     const search = Cypress.env('search');
 
     cy.on('uncaught:exception', (err, runnable) => {
