@@ -41,13 +41,17 @@ describe('visit search engines and grab search results', () => {
 
     cy.get('input[name="q"]').type(`${search}{enter}`, { delay: 500 });
 
-    const neeva = [];
+    cy.writeFile('./cypress/e2e/results/neeva.json', '[\n');
 
-    cy.get('[data-testid= "result-title-a"]').each(($el, index) => {
-      neeva.push({ [`neeva${index}`]: $el[0].href });
+    cy.get('a').each(($el, index) => {
+      cy.writeFile(
+        './cypress/e2e/results/neeva.json',
+        `${JSON.stringify({ [`neeva${index}`]: $el[0].href })},`,
+        { flag: 'a+' }
+      );
     });
 
-    cy.writeFile('./cypress/e2e/results/neeva.json', JSON.stringify(neeva));
+    cy.writeFile('./cypress/e2e/results/neeva.json', '\n]', { flag: 'a+' });
   });
 
   it('navigates to bing and enters search query, logging out the url of the first result', () => {
@@ -63,7 +67,7 @@ describe('visit search engines and grab search results', () => {
 
     const bing = [];
 
-    cy.get('#b_results > li.b_algo > h2.b_topTitle > a').each(($el, index) => {
+    cy.get('li > a').each(($el, index) => {
       bing.push({ [`bing${index}`]: $el[0].href });
     });
 
