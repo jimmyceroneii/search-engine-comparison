@@ -6,13 +6,19 @@ describe('visit search engines and grab search results', () => {
 
     cy.get('input[name="q"]').type(`${search}{enter}`, { delay: 500 });
 
-    const google = [];
+    cy.writeFile('./cypress/e2e/results/google.json', '[\n');
 
     cy.get('#search a').each(($el, index) => {
-      google.push({ [`google${index}`]: $el[0].href });
+      cy.writeFile(
+        './cypress/e2e/results/google.json',
+        `${JSON.stringify({ [`google${index}`]: $el[0].href })},`,
+        { flag: 'a+' }
+      );
     });
 
-    cy.writeFile('./cypress/e2e/results/google.json', JSON.stringify(google));
+    cy.writeFile('./cypress/e2e/results/google.json', '\n]', {
+      flag: 'a+',
+    });
   });
 
   it('navigates to duckduckgo and enters search query, logging out the url of the first result', () => {
@@ -22,16 +28,19 @@ describe('visit search engines and grab search results', () => {
 
     cy.get('input[name="q"]').type(`${search}{enter}`, { delay: 500 });
 
-    const duckduckgo = [];
+    cy.writeFile('./cypress/e2e/results/duckduckgo.json', '[\n');
 
     cy.get('[data-testid= "result-title-a"]').each(($el, index) => {
-      duckduckgo.push({ [`duckduckgo${index}`]: $el[0].href });
+      cy.writeFile(
+        './cypress/e2e/results/duckduckgo.json',
+        `${JSON.stringify({ [`duckduckgo${index}`]: $el[0].href })},`,
+        { flag: 'a+' }
+      );
     });
 
-    cy.writeFile(
-      './cypress/e2e/results/duckduckgo.json',
-      JSON.stringify(duckduckgo)
-    );
+    cy.writeFile('./cypress/e2e/results/duckduckgo.json', '\n]', {
+      flag: 'a+',
+    });
   });
 
   it('navigates to neeva and enters search query, logging out the url of the first result', () => {
@@ -54,7 +63,7 @@ describe('visit search engines and grab search results', () => {
     cy.writeFile('./cypress/e2e/results/neeva.json', '\n]', { flag: 'a+' });
   });
 
-  it('navigates to bing and enters search query, logging out the url of the first result', () => {
+  it.only('navigates to bing and enters search query, logging out the url of the first result', () => {
     const search = Cypress.env('search');
 
     cy.on('uncaught:exception', (err, runnable) => {
@@ -65,12 +74,16 @@ describe('visit search engines and grab search results', () => {
 
     cy.get('input[name="q"]').type(`${search}{enter}`, { delay: 500 });
 
-    const bing = [];
+    cy.writeFile('./cypress/e2e/results/bing.json', '[\n');
 
-    cy.get('li > a').each(($el, index) => {
-      bing.push({ [`bing${index}`]: $el[0].href });
+    cy.get('a').each(($el, index) => {
+      cy.writeFile(
+        './cypress/e2e/results/bing.json',
+        `${JSON.stringify({ [`bing${index}`]: $el[0].href })},`,
+        { flag: 'a+' }
+      );
     });
 
-    cy.writeFile('./cypress/e2e/results/bing.json', JSON.stringify(bing));
+    cy.writeFile('./cypress/e2e/results/bing.json', '\n]', { flag: 'a+' });
   });
 });
